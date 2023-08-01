@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ApiController } from './api.controller';
+import { ApiController } from './adapter/input/api.controller';
 import { ApiService } from './api.service';
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
+import {TopicAdapter} from "./adapter/output/topic.adapter";
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
   controllers: [ApiController],
   providers: [
     ApiService,
+    {
+      provide: 'TOPIC_PERSISTENCE_OUTPUTPORT',
+      useClass: TopicAdapter,
+    },
     {
       provide: 'KAFKA_PRODUCER',
       useFactory: async (kafkaService: ClientKafka) => {

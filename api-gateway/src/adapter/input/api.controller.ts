@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiService } from './api.service';
-import { SubscriberDto } from './dtos/subscriber.dto';
+import { ApiService } from '../../api.service';
+import { SubscriberDto } from '../../application/dtos/subscriber.dto';
 import { RecordMetadata } from 'kafkajs';
 
 @Controller('subscriber')
