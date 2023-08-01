@@ -1,6 +1,6 @@
 import { SubscriberDto } from '../dtos/subscriber.dto';
-import { RecordMetadata } from 'kafkajs';
+import { RecordMetadataEntity } from '../../domain/record-topic.entity';
 
 export interface TopicPersistenceOutputport {
-  publishMessage(message: SubscriberDto): Promise<RecordMetadata[]>;
+  publishMessage(message: SubscriberDto): Promise<RecordMetadataEntity[]>;
 }

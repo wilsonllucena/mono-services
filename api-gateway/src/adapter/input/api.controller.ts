@@ -1,15 +1,23 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiService } from '../../api.service';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Post,
+} from '@nestjs/common';
 import { SubscriberDto } from '../../application/dtos/subscriber.dto';
-import { RecordMetadata } from 'kafkajs';
+import { CreateSubscriberUseCase } from '../../application/input/create-subscriber.usecase';
 
 @Controller('subscriber')
 export class ApiController {
-  constructor(private readonly apiService: ApiService) {}
-
+  constructor(
+    @Inject('CREATE_SUBSCRIBER_USECASE')
+    private readonly createSubscriber: CreateSubscriberUseCase,
+  ) {}
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() data: SubscriberDto): Promise<RecordMetadata[]> {
-    return this.apiService.createSubscriber(data);
+  create(@Body() data: SubscriberDto) {
+    return this.createSubscriber.execute(data);
   }
 }

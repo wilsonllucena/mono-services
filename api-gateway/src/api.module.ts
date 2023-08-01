@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ApiController } from './adapter/input/api.controller';
-import { ApiService } from './api.service';
+import { CreateSubscriberService } from './application/services/create-subscriber.service';
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
-import {TopicAdapter} from "./adapter/output/topic.adapter";
+import { TopicAdapter } from './adapter/output/topic.adapter';
 
 @Module({
   imports: [
@@ -20,7 +20,10 @@ import {TopicAdapter} from "./adapter/output/topic.adapter";
   ],
   controllers: [ApiController],
   providers: [
-    ApiService,
+    {
+      provide: 'CREATE_SUBSCRIBER_USECASE',
+      useClass: CreateSubscriberService,
+    },
     {
       provide: 'TOPIC_PERSISTENCE_OUTPUTPORT',
       useClass: TopicAdapter,
