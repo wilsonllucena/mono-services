@@ -10,8 +10,8 @@ export class AppService {
     private readonly subscriberModel: Model<Subscriber>,
   ) {}
 
-  execute(subscriber: any): Promise<Subscriber> {
+  async execute(subscriber: any): Promise<Subscriber> {
     const createdSubscriber = new this.subscriberModel(subscriber);
-    return createdSubscriber.save();
+    return await createdSubscriber.save();
   }
 }
